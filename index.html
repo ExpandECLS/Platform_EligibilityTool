@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRACTICAL Platform Pre-Screener</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #005b96;
+            --primary-light: #3d7ba8;
+            --secondary-color: #00a3e0;
+            --secondary-dark: #0088c6;
+            --success-color: #43b02a;
+            --success-light: #e6f4e6;
+            --danger-color: #e31937;
+            --danger-light: #fce8eb;
+            --warning-color: #ff9e1b;
+            --text-dark: #212121;
+            --text-medium: #424242;
+            --text-light: #757575;
+            --border-color: #e0e0e0;
+            --bg-light: #f5f5f5;
+            --card-shadow: 0 2px 4px rgba(0, 91, 150, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px 0;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            border-top: 4px solid var(--primary-color);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+        
+        .protocol-info {
+            color: var(--text-medium);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .protocol-version {
+            color: var(--primary-color);
+            font-weight: 500;
+            font-size: 13px;
+            background-color: var(--bg-light);
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        
+        .calculator-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            padding: 0;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .calculator {
+            padding: 20px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .protocol-instruction {
+            background-color: #f0f7fc;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            border-left: 4px solid var(--secondary-color);
+            color: var(--text-medium);
+        }
+        
+        .protocol-instruction strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .input-group {
+            margin-bottom: 16px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: var(--text-medium);
+            font-size: 14px;
+        }
+        
+        .input-container {
+            position: relative;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 15px;
+            transition: var(--transition);
+            background-color: #fafafa;
+        }
+        
+        input:focus, select:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 163, 224, 0.2);
+            background-color: white;
+        }
+        
+        .input-unit {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 13px;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            width: 100%;
+            font-weight: 500;
+            margin: 12px 0;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        button:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(0, 91, 150, 0.15);
+        }
+        
+        button i {
+            margin-right: 8px;
+        }
+        
+        .result-container {
+            display: none;
+            margin-top: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .result-value {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 12px 0;
+            text-align: center;
+            color: var(--primary-color);
+            padding: 12px;
+            background-color: var(--bg-light);
+            border-radius: 6px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .result-box {
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 16px;
+            border-left: 4px solid;
+            font-size: 14px;
+        }
+        
+        .decision {
+            padding: 12px;
+            border-radius: 6px;
+        }
+        
+        .success {
+            background-color: var(--success-light);
+            border-color: var(--success-color);
+            color: var(--success-color);
+        }
+        
+        .danger {
+            background-color: var(--danger-light);
+            border-color: var(--danger-color);
+            color: var(--danger-color);
+        }
+        
+        .warning {
+            background-color: #fff8e6;
+            border-color: var(--warning-color);
+            color: var(--warning-color);
+        }
+        
+        .disclaimer {
+            font-size: 12px;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 20px;
+            padding: 12px;
+            background-color: white;
+            border-radius: 6px;
+            box-shadow: var(--card-shadow);
+            line-height: 1.5;
+        }
+        
+        .coenrollment-box {
+            background-color: #e6f4e6;
+            border-left: 4px solid var(--success-color);
+            padding: 12px;
+            margin: 16px 0;
+            font-size: 13px;
+            border-radius: 4px;
+        }
+        
+        .domain-specific {
+            display: none;
+        }
+        
+        .additional-criteria {
+            font-size: 13px;
+            color: var(--text-medium);
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 20px;
+            }
+            
+            .calculator {
+                padding: 15px;
+            }
+            
+            .protocol-instruction {
+                font-size: 13px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>PRACTICAL PLATFORM PRE-SCREENER</h1>
+            <div class="protocol-info">
+                Quick Eligibility Assessment Tool
+                <div class="protocol-version">Version 1.1</div>
+            </div>
+        </header>
+        
+        <div class="calculator-container">
+            <div id="eligibility-calculator" class="calculator">
+                <div class="protocol-instruction">
+                    <strong>PRELIMINARY ASSESSMENT ONLY:</strong> This quick screen checks key criteria. Always review full protocol for all inclusion/exclusion criteria before enrollment.
+                </div>
+                
+                <div class="input-group">
+                    <label for="domainSelect">
+                        Select Domain to Evaluate
+                    </label>
+                    <select id="domainSelect" onchange="showDomainFields()">
+                        <option value="">-- Select a Domain --</option>
+                        <option value="FAST-3">FAST-3 (Furosemide in AHRF)</option>
+                        <option value="CORT-E2">CORT-E² (Corticosteroids)</option>
+                        <option value="FLUDRO-1">FLUDRO-1 (Fludrocortisone)</option>
+                        <option value="IMV-Strategies">IMV Strategies</option>
+                        <option value="IMV-ECLS">IMV-ECLS</option>
+                        <option value="EXPAND-ECLS">EXPAND-ECLS</option>
+                    </select>
+                </div>
+                
+                <!-- Platform Criteria (Common to all domains) -->
+                <div id="platformCriteria">
+                    <div class="protocol-instruction">
+                        <strong>KEY PLATFORM CRITERIA</strong>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="symptomsDuration">
+                            New/worsening respiratory symptoms within past 2 weeks
+                        </label>
+                        <select id="symptomsDuration">
+                            <option value="">-- Select --</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                            <option value="chronic-progression">Yes, but due to progression of severe pre-existing chronic lung disease (COPD, ILD, or lung cancer)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="ageRange">
+                            Patient Age Range
+                        </label>
+                        <select id="ageRange">
+                            <option value="">Select</option>
+                            <option value="≥18">≥18 years</option>
+                            <option value="<18"><18 years</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="oxygenSupport">
+                            Current Oxygen Support
+                        </label>
+                        <select id="oxygenSupport">
+                            <option value="">Select</option>
+                            <option value="≥10L_or_NIV">≥10L/min, HFNC, NIV, or IMV</option>
+                            <option value="<10L"><10L/min or none</option>
+                        </select>
+                        <div class="additional-criteria">Must be receiving support for ≥4 hours</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="fio2Requirement">
+                            Minimum FiO₂ ≥ 0.40 or ≥10L/min on face mask
+                        </label>
+                        <select id="fio2Requirement">
+                            <option value="">Select</option>
+                            <option value="yes">Yes (or on ECLS)</option>
+                            <option value="no">No</option>
+                        </select>
+                        <div class="additional-criteria">Must be receiving support for ≥4 hours (unless on ECLS)</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="primaryCause">
+                            Primary Cause of Hypoxemia
+                        </label>
+                        <select id="primaryCause">
+                            <option value="">Select</option>
+                            <option value="ards">ARDS/AHRF</option>
+                            <option value="heart">Acute Heart Failure</option>
+                            <option value="pe">Pulmonary Embolism</option>
+                            <option value="asthma">Status Asthmatics</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="palliativeCare">
+                            Palliative Care Status
+                        </label>
+                        <select id="palliativeCare">
+                            <option value="">Select</option>
+                            <option value="no">Not palliative</option>
+                            <option value="yes">Fully palliative</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- FAST-3 Domain Specific Criteria -->
+                <div id="FAST-3" class="domain-specific">
+                    <div class="protocol-instruction">
+                        <strong>FAST-3 KEY CRITERIA</strong>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="arsType">
+                            Advanced Respiratory Support
+                        </label>
+                        <select id="arsType">
+                            <option value="">Select</option>
+                            <option value="meets">IMV or NIV/HFNC ≥4h with FiO₂ ≥40%</option>
+                            <option value="doesNotMeet">Does not meet</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="hypoxemiaSeverity">
+                            Hypoxemia Severity
+                        </label>
+                        <select id="hypoxemiaSeverity">
+                            <option value="">Select</option>
+                            <option value="meets">PaO₂/FiO₂ <300 or SpO₂/FiO₂ <315</option>
+                            <option value="doesNotMeet">Does not meet</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="arsDuration">
+                            Duration of ARS
+                        </label>
+                        <select id="arsDuration">
+                            <option value="">Select</option>
+                            <option value="≤48h">≤48 hours</option>
+                            <option value=">48h">>48 hours</option>
+                        </select>
+                    </div>
+                    
+                    <div class="additional-criteria">
+                        Also consider: Chronic pulmonary disease, furosemide allergy, anti-inflammatory trial participation
+                    </div>
+                </div>
+                
+                <!-- CORT-E² Domain Specific Criteria -->
+                <div id="CORT-E2" class="domain-specific">
+                    <div class="protocol-instruction">
+                        <strong>CORT-E² KEY CRITERIA</strong>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="cohortSelect">
+                            Select Cohort
+                        </label>
+                        <select id="cohortSelect">
+                            <option value="">-- Select --</option>
+                            <option value="early">Early Cohort</option>
+                            <option value="extended">Extended Cohort</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Early Cohort -->
+                    <div id="earlyCohort" class="domain-specific">
+                        <div class="input-group">
+                            <label for="icuAdmissionHours">
+                                Time Since ICU Admission
+                            </label>
+                            <select id="icuAdmissionHours">
+                                <option value="">Select</option>
+                                <option value="≤72h">≤72 hours</option>
+                                <option value=">72h">>72 hours</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="corticosteroidUse">
+                                Recent Corticosteroid Use (14 days)
+                            </label>
+                            <select id="corticosteroidUse">
+                                <option value="">Select</option>
+                                <option value="≤2doses">≤2 doses</option>
+                                <option value=">2doses">>2 doses</option>
+                            </select>
+                        </div>
+                        
+                        <div class="additional-criteria">
+                            Also consider: COVID-19 infection, TBI, dexamethasone allergy, existing steroid indication
+                        </div>
+                    </div>
+                    
+                    <!-- Extended Cohort -->
+                    <div id="extendedCohort" class="domain-specific" style="display:none;">
+                        <div class="input-group">
+                            <label for="corticosteroidDays">
+                                Days of Corticosteroids Received
+                            </label>
+                            <select id="corticosteroidDays">
+                                <option value="">Select</option>
+                                <option value="8-12">8-12 days</option>
+                                <option value="<8"><8 days</option>
+                                <option value=">12">>12 days</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="ongoingAhrf">
+                                Ongoing AHRF Requiring Support
+                            </label>
+                            <select id="ongoingAhrf">
+                                <option value="">Select</option>
+                                <option value="yes">HFNC, NIV, or IMV</option>
+                                <option value="no">No ongoing support needed</option>
+                            </select>
+                        </div>
+                        
+                        <div class="additional-criteria">
+                            Also consider: Alternate steroid indication, TBI
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FLUDRO-1 Domain Specific Criteria -->
+                <div id="FLUDRO-1" class="domain-specific">
+                    <div class="protocol-instruction">
+                        <strong>FLUDRO-1 KEY CRITERIA</strong>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="fludroIcuAdmissionHours">
+                            Time Since ICU Admission
+                        </label>
+                        <select id="fludroIcuAdmissionHours">
+                            <option value="">Select</option>
+                            <option value="≤72h">≤72 hours</option>
+                            <option value=">72h">>72 hours</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="fludrocortisoneAllergy">
+                            Fludrocortisone Allergy
+                        </label>
+                        <select id="fludrocortisoneAllergy">
+                            <option value="">Select</option>
+                            <option value="no">No known allergy</option>
+                            <option value="yes">Known allergy</option>
+                        </select>
+                    </div>
+                    
+                    <div class="additional-criteria">
+                        Also consider: Existing fludrocortisone use, enteral access, clinician judgment
+                    </div>
+                </div>
+                
+                <!-- IMV Strategies Domain Specific Criteria -->
+                <div id="IMV-Strategies" class="domain-specific">
+                    <div class="protocol-instruction">
+                        <strong>IMV STRATEGIES KEY CRITERIA</strong>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="ventilationStatus">
+                            Ventilation Status
+                        </label>
+                        <select id="ventilationStatus">
+                            <option value="">Select</option>
+                            <option value="intubated">Intubated (not on ECLS)</option>
+                            <option value="ecls">On ECLS (LDPVS sites)</option>
+                            <option value="neither">Neither</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="imvDuration">
+                            Duration of Mechanical Ventilation during current ICU admission
+                        </label>
+                        <select id="imvDuration">
+                            <option value="">Select</option>
+                            <option value="≤72h">≤72 hours (from intubation during this admission)</option>
+                            <option value=">72h">>72 hours (from intubation during this admission)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="additional-criteria">
+                        Also consider: Chronic hypercapnia, home ventilation, neuromuscular disorders, severe brain injury
+                    </div>
+                </div>
+                
+                <!-- IMV-ECLS Domain Specific Criteria -->
+                <div id="IMV-ECLS" class="domain-specific">
+                    <div class="protocol-instruction">
+                        <strong>IMV-ECLS KEY CRITERIA</strong>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="eclsStatus">
+                            ECLS Status
+                        </label>
+                        <select id="eclsStatus">
+                            <option value="">Select</option>
+                            <option value="consented">Consented for VV-ECLS</option>
+                            <option value="initiated">Initiated VV-ECLS ≤6h</option>
+                            <option value="neither">Neither</option>
+                        </select>
+                    </div>
+                    
+                    <div class="additional-criteria">
+                        Also consider: ECLS for CO₂ removal, recent pneumothorax, bridge to transplant
+                    </div>
+                </div>
+                
+                <!-- EXPAND-ECLS Domain Specific Criteria -->
+                <div id="EXPAND-ECLS" class="domain-specific">
+                    <div class="protocol-instruction">
+                        <strong>EXPAND-ECLS KEY CRITERIA</strong>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="ventilationHours">
+                            Duration of Mechanical Ventilation
+                        </label>
+                        <select id="ventilationHours">
+                            <option value="">Select</option>
+                            <option value="≤72h">≤72 hours</option>
+                            <option value=">72h">>72 hours</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="pao2fio2">
+                            PaO₂/FiO₂ Ratio
+                        </label>
+                        <select id="pao2fio2">
+                            <option value="">Select</option>
+                            <option value="≤150">≤150 mmHg</option>
+                            <option value=">150">>150 mmHg</option>
+                        </select>
+                    </div>
+                    
+                    <div class="additional-criteria">
+                        Also consider: Current ECLS, chronic hypercapnia, COVID-19, home ventilation
+                    </div>
+                </div>
+                
+                <button onclick="checkEligibility()">
+                    <i class="fas fa-user-check"></i> CHECK PRELIMINARY ELIGIBILITY
+                </button>
+                
+                <div id="eligibility-result-container" class="result-container">
+                    <div class="result-value" id="eligibilityResult"></div>
+                    
+                    <div class="result-box" id="eligibility-decision-box">
+                        <div class="decision" id="eligibility-decision-text"></div>
+                    </div>
+                    
+                    <div id="coenrollment-box" class="coenrollment-box" style="display:none;">
+                        <strong>CO-ENROLLMENT POTENTIAL:</strong> <span id="coenrollment-text"></span>
+                    </div>
+                    
+                    <div class="result-box warning" id="additional-considerations" style="display:none;">
+                        <strong>ADDITIONAL CRITERIA TO CONSIDER:</strong> <span id="additional-considerations-text"></span>
+                    </div>
+                    
+                    <div id="screening-log-reminder" class="result-box success" style="display:none;">
+                        <strong>REMINDER:</strong> Complete the 'PRACTICAL Screening Log' and refer to 'PRACTICAL eCRF completion guidelines' for further information
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="disclaimer">
+            <i class="fas fa-exclamation-triangle"></i> <strong>PRE-SCREENING TOOL ONLY</strong> - This provides a rapid initial assessment. Final eligibility determination requires review of ALL protocol criteria by investigators. Always consult full protocol before enrollment.<br><br>
+            <i class="fas fa-shield-alt"></i> <strong>DATA PRIVACY:</strong> No patient data is stored or transmitted when using this tool. All information remains on your local device.
+        </div>
+    </div>
+
+    <script>
+        function showDomainFields() {
+            // Hide all domain-specific sections first
+            const domainSections = document.querySelectorAll('.domain-specific');
+            domainSections.forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show the selected domain section
+            const selectedDomain = document.getElementById('domainSelect').value;
+            if (selectedDomain) {
+                document.getElementById(selectedDomain).style.display = 'block';
+            }
+            
+            // Hide eligibility results when changing domain
+            document.getElementById('eligibility-result-container').style.display = 'none';
+        }
+        
+        function checkEligibility() {
+            const selectedDomain = document.getElementById('domainSelect').value;
+            if (!selectedDomain) {
+                alert("Please select a domain first");
+                return;
+            }
+            
+            // Get platform values
+            const symptomsDuration = document.getElementById('symptomsDuration').value;
+            const ageRange = document.getElementById('ageRange').value;
+            const oxygenSupport = document.getElementById('oxygenSupport').value;
+            const fio2Requirement = document.getElementById('fio2Requirement').value;
+            const primaryCause = document.getElementById('primaryCause').value;
+            const palliativeCare = document.getElementById('palliativeCare').value;
+            
+            if (!symptomsDuration || !ageRange || !oxygenSupport || !fio2Requirement || !primaryCause || !palliativeCare) {
+                alert("Please complete all required platform fields");
+                return;
+            }
+            
+            let eligibilityIssues = [];
+            let meetsPlatformInclusion = true;
+            let meetsDomainInclusion = true;
+            let coenrollmentNotes = [];
+            let additionalConsiderations = [];
+            let suggestedDomains = [];
+            
+            // Check platform inclusion criteria
+            if (symptomsDuration === "no") {
+                eligibilityIssues.push("No new/worsening respiratory symptoms within past 2 weeks (platform exclusion)");
+                meetsPlatformInclusion = false;
+            }
+            else if (symptomsDuration === "chronic-progression") {
+                eligibilityIssues.push("Excluded: Worsening due to severe pre-existing chronic lung disease (COPD, ILD, or lung cancer)");
+                meetsPlatformInclusion = false;
+            }
+            
+            if (ageRange === "<18") {
+                eligibilityIssues.push("Age <18 years (platform exclusion)");
+                meetsPlatformInclusion = false;
+            }
+            
+            if (oxygenSupport === "<10L") {
+                eligibilityIssues.push("Insufficient oxygen support (platform exclusion)");
+                meetsPlatformInclusion = false;
+            }
+            
+            if (fio2Requirement === "no") {
+                eligibilityIssues.push("Does not meet minimum FiO₂ ≥ 0.40 or ≥10L/min on face mask (platform exclusion)");
+                meetsPlatformInclusion = false;
+            }
+            
+            // Check platform exclusion criteria (primary cause)
+            if (primaryCause === "heart" || primaryCause === "pe" || primaryCause === "asthma") {
+                eligibilityIssues.push("Hypoxemia primarily due to " + primaryCause + " (platform exclusion)");
+            }
+            
+            if (palliativeCare === "yes") {
+                eligibilityIssues.push("Fully palliative care (platform exclusion)");
+            }
+            
+            // Check domain-specific criteria
+            if (selectedDomain === "FAST-3") {
+                const arsType = document.getElementById('arsType').value;
+                const hypoxemiaSeverity = document.getElementById('hypoxemiaSeverity').value;
+                const arsDuration = document.getElementById('arsDuration').value;
+                
+                if (!arsType || !hypoxemiaSeverity || !arsDuration) {
+                    alert("Please complete all required FAST-3 fields");
+                    return;
+                }
+                
+                if (arsType === "doesNotMeet") {
+                    eligibilityIssues.push("Does not meet advanced respiratory support criteria");
+                    meetsDomainInclusion = false;
+                }
+                
+                if (hypoxemiaSeverity === "doesNotMeet") {
+                    eligibilityIssues.push("Does not meet hypoxemia severity criteria");
+                    meetsDomainInclusion = false;
+                }
+                
+                if (arsDuration === ">48h") {
+                    eligibilityIssues.push("ARS duration >48 hours (exclusion)");
+                    meetsDomainInclusion = false;
+                }
+                
+                additionalConsiderations = [
+                    "Chronic pulmonary disease (home O₂ or chronic hypercapnia)",
+                    "Allergy to furosemide/sulfonamides",
+                    "Participation in anti-inflammatory trials"
+                ];
+                
+                // Suggest other domains if FAST-3 not eligible but platform eligible
+                if (meetsPlatformInclusion && !meetsDomainInclusion) {
+                    suggestedDomains.push("CORT-E² (Early Cohort) if ≤72h ICU admission");
+                    suggestedDomains.push("FLUDRO-1 if ≤72h ICU admission");
+                }
+                
+                // Co-enrollment notes (only if meets both platform and domain)
+                if (meetsPlatformInclusion && meetsDomainInclusion) {
+                    coenrollmentNotes.push("Possible with CORT-E² (Early) if ≤72h ICU admission");
+                    coenrollmentNotes.push("Possible with FLUDRO-1 if ≤72h ICU admission");
+                }
+            }
+            else if (selectedDomain === "CORT-E2") {
+                const cohortSelect = document.getElementById('cohortSelect').value;
+                
+                if (!cohortSelect) {
+                    alert("Please select a CORT-E² cohort");
+                    return;
+                }
+                
+                if (cohortSelect === "early") {
+                    const icuAdmissionHours = document.getElementById('icuAdmissionHours').value;
+                    const corticosteroidUse = document.getElementById('corticosteroidUse').value;
+                    
+                    if (!icuAdmissionHours || !corticosteroidUse) {
+                        alert("Please complete all required Early Cohort fields");
+                        return;
+                    }
+                    
+                    if (icuAdmissionHours === ">72h") {
+                        eligibilityIssues.push(">72 hours since ICU admission (exclusion)");
+                        meetsDomainInclusion = false;
+                    }
+                    
+                    if (corticosteroidUse === ">2doses") {
+                        eligibilityIssues.push(">2 doses of corticosteroids in past 14 days (exclusion)");
+                        meetsDomainInclusion = false;
+                    }
+                    
+                    additionalConsiderations = [
+                        "COVID-19 infection",
+                        "Acute traumatic brain injury",
+                        "Dexamethasone allergy",
+                        "Existing steroid indication"
+                    ];
+                    
+                    // Suggest other domains if CORT-E² not eligible but platform eligible
+                    if (meetsPlatformInclusion && !meetsDomainInclusion) {
+                        suggestedDomains.push("FAST-3 if ARS ≤48h");
+                        suggestedDomains.push("FLUDRO-1 if ≤72h ICU admission");
+                    }
+                    
+                    // Co-enrollment notes (only if meets both platform and domain)
+                    if (meetsPlatformInclusion && meetsDomainInclusion) {
+                        coenrollmentNotes.push("Possible with CORT-E² (Early) if ≤72h ICU admission");
+                        coenrollmentNotes.push("Possible with FLUDRO-1 if ≤72h ICU admission");
+                    }
+                }
+                else if (cohortSelect === "extended") {
+                    const corticosteroidDays = document.getElementById('corticosteroidDays').value;
+                    const ongoingAhrf = document.getElementById('ongoingAhrf').value;
+                    
+                    if (!corticosteroidDays || !ongoingAhrf) {
+                        alert("Please complete all required Extended Cohort fields");
+                        return;
+                    }
+                    
+                    if (corticosteroidDays !== "8-12") {
+                        eligibilityIssues.push("Corticosteroid duration " + corticosteroidDays + " (requires 8-12 days)");
+                        meetsDomainInclusion = false;
+                    }
+                    
+                    if (ongoingAhrf === "no") {
+                        eligibilityIssues.push("No ongoing AHRF requiring support (exclusion)");
+                        meetsDomainInclusion = false;
+                    }
+                    
+                    additionalConsiderations = [
+                        "Alternate indication for ongoing corticosteroids",
+                        "Acute traumatic brain injury"
+                    ];
+                    
+                    // Suggest other domains if Extended Cohort not eligible but platform eligible
+                    if (meetsPlatformInclusion && !meetsDomainInclusion) {
+                        suggestedDomains.push("FAST-3 if ARS ≤48h");
+                        suggestedDomains.push("FLUDRO-1 if ≤72h ICU admission");
+                    }
+                    
+                    // Extended cohort has limited co-enrollment options
+                    if (meetsPlatformInclusion && meetsDomainInclusion) {
+                        coenrollmentNotes.push("Co-enrollment unlikely due to extended treatment duration");
+                    }
+                }
+            }
+            else if (selectedDomain === "FLUDRO-1") {
+                const fludroIcuAdmissionHours = document.getElementById('fludroIcuAdmissionHours').value;
+                const fludrocortisoneAllergy = document.getElementById('fludrocortisoneAllergy').value;
+                
+                if (!fludroIcuAdmissionHours || !fludrocortisoneAllergy) {
+                    alert("Please complete all required FLUDRO-1 fields");
+                    return;
+                }
+                
+                if (fludroIcuAdmissionHours === ">72h") {
+                    eligibilityIssues.push(">72 hours since ICU admission (exclusion)");
+                    meetsDomainInclusion = false;
+                }
+                
+                if (fludrocortisoneAllergy === "yes") {
+                    eligibilityIssues.push("Fludrocortisone allergy (exclusion)");
+                    meetsDomainInclusion = false;
+                }
+                
+                additionalConsiderations = [
+                    "Existing fludrocortisone use",
+                    "Enteral access availability",
+                    "Clinician judgment"
+                ];
+                
+                // Suggest other domains if FLUDRO-1 not eligible but platform eligible
+                if (meetsPlatformInclusion && !meetsDomainInclusion) {
+                    suggestedDomains.push("CORT-E² (Early Cohort) if ≤72h ICU admission");
+                    suggestedDomains.push("FAST-3 if ARS ≤48h");
+                }
+                
+                // Co-enrollment notes (only if meets both platform and domain)
+                if (meetsPlatformInclusion && meetsDomainInclusion) {
+                    coenrollmentNotes.push("Possible with CORT-E² (Early) if ≤72h ICU admission");
+                    coenrollmentNotes.push("Possible with FAST-3 if ARS ≤48h");
+                }
+            }
+            else if (selectedDomain === "IMV-Strategies") {
+                const ventilationStatus = document.getElementById('ventilationStatus').value;
+                const imvDuration = document.getElementById('imvDuration').value;
+                
+                if (!ventilationStatus || !imvDuration) {
+                    alert("Please complete all required IMV Strategies fields");
+                    return;
+                }
+                
+                if (ventilationStatus === "neither") {
+                    eligibilityIssues.push("Does not meet ventilation status criteria");
+                    meetsDomainInclusion = false;
+                }
+                
+                if (imvDuration === ">72h") {
+                    eligibilityIssues.push("MV duration >72 hours in current ICU admission (exclusion)");
+                    meetsDomainInclusion = false;
+                }
+                
+                additionalConsiderations = [
+                    "Chronic hypercapnic respiratory failure",
+                    "Home mechanical ventilation",
+                    "Neuromuscular disorders",
+                    "Severe brain injury (GCS ≤8)"
+                ];
+                
+                // Suggest other domains if IMV Strategies not eligible but platform eligible
+                if (meetsPlatformInclusion && !meetsDomainInclusion) {
+                    if (ventilationStatus === "ecls") {
+                        suggestedDomains.push("IMV-ECLS for ECLS candidates");
+                    } else {
+                        suggestedDomains.push("CORT-E² (Early Cohort) if ≤72h ICU admission");
+                        suggestedDomains.push("FAST-3 if ARS ≤48h");
+                    }
+                }
+                
+                // Co-enrollment notes (only if meets both platform and domain)
+                if (meetsPlatformInclusion && meetsDomainInclusion) {
+                    coenrollmentNotes.push("Possible with CORT-E² (Early) if ≤72h ICU admission");
+                    coenrollmentNotes.push("Possible with IMV-ECLS for ECLS candidates");
+                }
+            }
+            else if (selectedDomain === "IMV-ECLS") {
+                const eclsStatus = document.getElementById('eclsStatus').value;
+                
+                if (!eclsStatus) {
+                    alert("Please complete all required IMV-ECLS fields");
+                    return;
+                }
+                
+                if (eclsStatus === "neither") {
+                    eligibilityIssues.push("Does not meet ECLS status criteria");
+                    meetsDomainInclusion = false;
+                }
+                
+                additionalConsiderations = [
+                    "ECLS primarily for CO₂ removal",
+                    "Recent pneumothorax (<3 months)",
+                    "ECLS as bridge to transplant"
+                ];
+                
+                // Suggest other domains if IMV-ECLS not eligible but platform eligible
+                if (meetsPlatformInclusion && !meetsDomainInclusion) {
+                    suggestedDomains.push("IMV Strategies for non-ECLS patients");
+                    suggestedDomains.push("CORT-E² (Early Cohort) if ≤72h ICU admission");
+                }
+                
+                // Co-enrollment notes (only if meets both platform and domain)
+                if (meetsPlatformInclusion && meetsDomainInclusion) {
+                    coenrollmentNotes.push("Possible with IMV Strategies for ECLS candidates");
+                }
+            }
+            else if (selectedDomain === "EXPAND-ECLS") {
+                const ventilationHours = document.getElementById('ventilationHours').value;
+                const pao2fio2 = document.getElementById('pao2fio2').value;
+                
+                if (!ventilationHours || !pao2fio2) {
+                    alert("Please complete all required EXPAND-ECLS fields");
+                    return;
+                }
+                
+                if (ventilationHours === ">72h") {
+                    eligibilityIssues.push("MV duration >72 hours (exclusion)");
+                    meetsDomainInclusion = false;
+                }
+                
+                if (pao2fio2 === ">150") {
+                    eligibilityIssues.push("PaO₂/FiO₂ >150 mmHg (exclusion)");
+                    meetsDomainInclusion = false;
+                }
+                
+                additionalConsiderations = [
+                    "Current ECLS use",
+                    "Chronic hypercapnia",
+                    "COVID-19 related respiratory failure",
+                    "Home mechanical ventilation"
+                ];
+                
+                // Suggest other domains if EXPAND-ECLS not eligible but platform eligible
+                if (meetsPlatformInclusion && !meetsDomainInclusion) {
+                    suggestedDomains.push("IMV Strategies for non-ECLS patients");
+                    suggestedDomains.push("CORT-E² (Early Cohort) if ≤72h ICU admission");
+                }
+                
+                // EXPAND-ECLS has limited co-enrollment options
+                if (meetsPlatformInclusion && meetsDomainInclusion) {
+                    coenrollmentNotes.push("Co-enrollment with IMV Strategies not allowed");
+                }
+            }
+            
+            const resultContainer = document.getElementById('eligibility-result-container');
+            const resultValue = document.getElementById('eligibilityResult');
+            const decisionBox = document.getElementById('eligibility-decision-box');
+            const decisionText = document.getElementById('eligibility-decision-text');
+            const coenrollmentBox = document.getElementById('coenrollment-box');
+            const coenrollmentText = document.getElementById('coenrollment-text');
+            const additionalBox = document.getElementById('additional-considerations');
+            const additionalText = document.getElementById('additional-considerations-text');
+            const screeningLogReminder = document.getElementById('screening-log-reminder');
+            
+            if (eligibilityIssues.length === 0 && meetsPlatformInclusion && meetsDomainInclusion) {
+                resultValue.innerHTML = `PRELIMINARY ASSESSMENT: POTENTIALLY ELIGIBLE FOR ${selectedDomain}`;
+                decisionBox.className = "result-box success";
+                decisionText.innerHTML = `
+                    <strong>This patient meets key criteria for ${selectedDomain} based on this pre-screen.</strong><br><br>
+                    <strong>NEXT STEPS:</strong> Review ALL protocol criteria. Only investigators can determine final eligibility.
+                `;
+                screeningLogReminder.style.display = 'block';
+            } 
+            else if (meetsPlatformInclusion && meetsDomainInclusion) {
+                // Meets inclusion but has some exclusion criteria
+                resultValue.innerHTML = `PRELIMINARY ASSESSMENT: POTENTIAL EXCLUSIONS FOR ${selectedDomain}`;
+                decisionBox.className = "result-box warning";
+                decisionText.innerHTML = `
+                    <strong>This patient meets key inclusion criteria but has potential exclusions:</strong><br><br>
+                    • ${eligibilityIssues.join('<br>• ')}<br><br>
+                    <strong>NEXT STEPS:</strong> Review full protocol criteria. Only investigators can determine final eligibility.
+                `;
+                screeningLogReminder.style.display = 'block';
+            } 
+            else if (!meetsPlatformInclusion) {
+                // Doesn't meet platform inclusion criteria
+                resultValue.innerHTML = `PRELIMINARY ASSESSMENT: DOES NOT MEET PLATFORM CRITERIA`;
+                decisionBox.className = "result-box danger";
+                decisionText.innerHTML = `
+                    <strong>This patient does not meet PRACTICAL platform criteria:</strong><br><br>
+                    • ${eligibilityIssues.join('<br>• ')}<br><br>
+                    <strong>NEXT STEPS:</strong> Not eligible for any PRACTICAL domain.
+                `;
+                screeningLogReminder.style.display = 'none';
+            }
+            else {
+                // Meets platform but not domain criteria
+                resultValue.innerHTML = `PRELIMINARY ASSESSMENT: DOES NOT MEET ${selectedDomain} CRITERIA`;
+                decisionBox.className = "result-box danger";
+                decisionText.innerHTML = `
+                    <strong>This patient does not meet key criteria for ${selectedDomain}:</strong><br><br>
+                    • ${eligibilityIssues.join('<br>• ')}<br><br>
+                    <strong>NEXT STEPS:</strong> Consider other PRACTICAL domains if applicable.<br><br>
+                    ${suggestedDomains.length > 0 ? '<strong>POTENTIAL ALTERNATE DOMAINS:</strong><br>• ' + suggestedDomains.join('<br>• ') : ''}
+                `;
+                screeningLogReminder.style.display = 'none';
+            }
+            
+            // Show co-enrollment notes if any and meets both platform and domain criteria
+            if (coenrollmentNotes.length > 0 && meetsPlatformInclusion && meetsDomainInclusion) {
+                coenrollmentText.innerHTML = coenrollmentNotes.join('<br>• ');
+                coenrollmentBox.style.display = 'block';
+            } else {
+                coenrollmentBox.style.display = 'none';
+            }
+            
+            // Show additional considerations if any
+            if (additionalConsiderations.length > 0) {
+                additionalText.innerHTML = additionalConsiderations.join('<br>• ');
+                additionalBox.style.display = 'block';
+            } else {
+                additionalBox.style.display = 'none';
+            }
+            
+            resultContainer.style.display = 'block';
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Show/hide CORT-E² cohorts based on selection
+        document.getElementById('cohortSelect').addEventListener('change', function() {
+            document.getElementById('earlyCohort').style.display = 'none';
+            document.getElementById('extendedCohort').style.display = 'none';
+            
+            if (this.value === "early") {
+                document.getElementById('earlyCohort').style.display = 'block';
+            } 
+            else if (this.value === "extended") {
+                document.getElementById('extendedCohort').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
